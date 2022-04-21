@@ -1,0 +1,50 @@
+{
+  "name": "bone-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.1.1",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.26.1",
+    "bulma": "^0.9.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-scripts": "5.0.1",
+    "underscore": "^1.13.2",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "create-bucket": "source .env && AWS_ACCESS_KEY_ID=$AWS_ACCESS AWS_SECRET_ACCESS_KEY=$AWS_SECRET aws s3 mb s3://$AWS_BUCKET --region $AWS_REGION --profile $AWS_PROFILE",
+    "delete-bucket": "source .env && AWS_ACCESS_KEY_ID=$AWS_ACCESS AWS_SECRET_ACCESS_KEY=$AWS_SECRET aws s3 rb s3://$AWS_BUCKET --region $AWS_REGION --profile $AWS_PROFILE",
+    "predeploy": "del-cli build && npm run build",
+    "deploy": "source .env && npm run predeploy && npm run aws-deploy",
+    "aws-deploy": "source .env && AWS_ACCESS_KEY_ID=$AWS_ACCESS AWS_SECRET_ACCESS_KEY=$AWS_SECRET deploy-aws-s3-cloudfront --react --bucket $AWS_BUCKET --distribution $AWS_DIS --non-interactive"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "del-cli": "^4.0.1",
+    "deploy-aws-s3-cloudfront": "^3.6.0"
+  }
+}
